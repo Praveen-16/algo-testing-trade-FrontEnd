@@ -223,6 +223,7 @@ const TradeForm = ({
         <Table>
           <TableHead>
             <TableRow>
+              <TableCell>User Name</TableCell>
               <TableCell>Trading Symbol CE</TableCell>
               <TableCell>Trading Symbol PE</TableCell>
               <TableCell>Saved At</TableCell>
@@ -231,7 +232,7 @@ const TradeForm = ({
           <TableBody>
             {savedInstruments.map((instrument, index) => (
               <TableRow key={index}>
-                {/* <TableCell>{instrument.name}</TableCell> */}
+                <TableCell>{instrument.name}</TableCell>
                 <TableCell>{instrument.callOptionSymbol}</TableCell>
                 <TableCell>{instrument.putOptionSymbol}</TableCell>
                 <TableCell>{instrument.updatedAt}</TableCell>

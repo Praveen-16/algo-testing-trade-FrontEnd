@@ -41,9 +41,8 @@ export const getInstruments  = async ()=>{
 }
 
 export const getNifty50Value  = async ()=>{
-  console.log( "check")
   const response = await axios.get(`${API_URL}/nifty50data`);
-  console.log(response, "check")
+  console.log('nifty 50: ', response)
   return response
 }
 
@@ -62,3 +61,8 @@ export const addUnsetteldFunds  = async (name)=>{
   // console.log(response)
   return response
 }
+
+export const getUserStatus = async (username) => {
+  const response = await axios.post(`${API_URL}/getuserstate`, {username});
+  return response
+};

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import {
-  Container,
   Snackbar,
   Grid,
   Button,
@@ -18,7 +17,6 @@ import {
 import UserDetails from "../components/UserDetails";
 import TradeForm from "../components/TradeForm";
 import TradeList from "../components/TradeList";
-import LogoImage from "../utils/images/loading-image.jpg";
 import { addUnsetteldFunds } from "../services/api";
 
 const Dashboard = () => {
@@ -45,7 +43,8 @@ const Dashboard = () => {
         "user606",
         "Bank Nifty 1",
         "user9015",
-        "user1005"
+        "user1005",
+        "day1009"
       ];
       try {
         const fetchedUsers = {};
@@ -279,6 +278,19 @@ const Dashboard = () => {
                     </div>
                     <TradeList
                       trades={trades["user606"]}
+                      className="trade-table"
+                    />
+                  </>
+                )}
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                {users["day1009"] && (
+                  <>
+                    <div className="user-details">
+                      <UserDetails user={users["day1009"]} />
+                    </div>
+                    <TradeList
+                      trades={trades["day1009"]}
                       className="trade-table"
                     />
                   </>
