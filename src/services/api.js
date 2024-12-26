@@ -1,13 +1,12 @@
 import axios from "axios";
 
 
-// const API_URL = "http://localhost:5000/api/trading";
+// const API_URL = "http://localhost:5000/api/trading"; 
 const API_URL = "https://algo-testing-2.onrender.com/api/trading";
 
 
 export const generateToken = async (data) => {
-  const token = await axios.post(`${API_URL}/token`, data);
-  console.log("TOKEN: ", token);
+  await axios.post(`${API_URL}/token`, data);
 };
 
 export const submitInstrumentKeyCE = async (data) => {
@@ -58,7 +57,6 @@ export const resetUserDetails  = async (name)=>{
 
 export const addUnsetteldFunds  = async (name)=>{
   const response = await axios.post(`${API_URL}/addUnsetteldFunds`);
-  // console.log(response)
   return response
 }
 

@@ -24,8 +24,8 @@ const TradeForm = ({
   onStopTrading,
 }) => {
   const [tokenData, setTokenData] = useState("");
-  const [instrumentCE, setInstrumentCE] = useState("NIFTY 24800 CE 24 OCT 24");
-  const [instrumentPE, setInstrumentPE] = useState("NIFTY 24800 PE 24 OCT 24");
+  // const [instrumentCE, setInstrumentCE] = useState("NIFTY 24800 CE 24 OCT 24");
+  // const [instrumentPE, setInstrumentPE] = useState("NIFTY 24800 PE 24 OCT 24");
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState("success");
@@ -69,31 +69,31 @@ const TradeForm = ({
     }
   };
 
-  const handleSubmitCE = async () => {
-    try {
-      await onSubmitInstrumentKeyCE(instrumentCE);
-      setSnackbarMessage("Instrument Key CE submitted successfully!");
-      setSnackbarSeverity("success");
-      setSnackbarOpen(true);
-    } catch (error) {
-      setSnackbarMessage("Failed to submit Instrument Key CE.");
-      setSnackbarSeverity("error");
-      setSnackbarOpen(true);
-    }
-  };
+  // const handleSubmitCE = async () => {
+  //   try {
+  //     await onSubmitInstrumentKeyCE(instrumentCE);
+  //     setSnackbarMessage("Instrument Key CE submitted successfully!");
+  //     setSnackbarSeverity("success");
+  //     setSnackbarOpen(true);
+  //   } catch (error) {
+  //     setSnackbarMessage("Failed to submit Instrument Key CE.");
+  //     setSnackbarSeverity("error");
+  //     setSnackbarOpen(true);
+  //   }
+  // };
 
-  const handleSubmitPE = async () => {
-    try {
-      await onSubmitInstrumentKeyPE(instrumentPE);
-      setSnackbarMessage("Instrument Key PE submitted successfully!");
-      setSnackbarSeverity("success");
-      setSnackbarOpen(true);
-    } catch (error) {
-      setSnackbarMessage("Failed to submit Instrument Key PE.");
-      setSnackbarSeverity("error");
-      setSnackbarOpen(true);
-    }
-  };
+  // const handleSubmitPE = async () => {
+  //   try {
+  //     await onSubmitInstrumentKeyPE(instrumentPE);
+  //     setSnackbarMessage("Instrument Key PE submitted successfully!");
+  //     setSnackbarSeverity("success");
+  //     setSnackbarOpen(true);
+  //   } catch (error) {
+  //     setSnackbarMessage("Failed to submit Instrument Key PE.");
+  //     setSnackbarSeverity("error");
+  //     setSnackbarOpen(true);
+  //   }
+  // };
 
   const handleStartTrading = async () => {
     try {
@@ -163,7 +163,7 @@ const TradeForm = ({
         </Grid>
 
         {/* Instrument CE Input */}
-        <Grid item xs={12}>
+        {/* <Grid item xs={12}>
           <TextField
             fullWidth
             label="Instrument Key CE"
@@ -174,10 +174,10 @@ const TradeForm = ({
           <Button variant="contained" onClick={handleSubmitCE}>
             Submit CE
           </Button>
-        </Grid>
+        </Grid> */}
 
         {/* Instrument PE Input */}
-        <Grid item xs={12}>
+        {/* <Grid item xs={12}>
           <TextField
             fullWidth
             label="Instrument Key PE"
@@ -188,7 +188,7 @@ const TradeForm = ({
           <Button variant="contained" onClick={handleSubmitPE}>
             Submit PE
           </Button>
-        </Grid>
+        </Grid> */}
 
         {/* Start/Stop Trading Buttons */}
         <Grid item xs={3}>

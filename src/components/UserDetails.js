@@ -10,9 +10,31 @@ import {
   Button,
   Box,
 } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 import { resetUserDetails, getUserStatus } from "../services/api";
 
 const UserDetails = ({ user }) => {
+  const theme = useTheme();
+
+  const detailStyle = {
+    color: theme.palette.text.primary,
+    fontSize: "16px",
+    marginBottom: "8px",
+  };
+
+  const userDetailsStyle = {
+    marginBottom: '30px',
+    padding: '20px',
+    borderRadius: '8px',
+    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+    backgroundColor: theme.palette.mode === 'dark' ? '#333' : '#f7f7f7', // Dark gray in dark mode
+  };
+
+  const boldTextStyle = {
+    fontWeight: "bold",
+    color: theme.palette.text.primary,
+  };
+
   const [userStatus, setUserStatus] = useState(null);
 
   const peValues = user.data.peValues.slice(-5);
@@ -23,7 +45,7 @@ const UserDetails = ({ user }) => {
       const userName = user.data.name;
       const response = await getUserStatus(userName);
       setUserStatus(response.data);
-      console.log(response.data)
+      console.log(response.data);
     } catch (error) {
       console.error("Error fetching user status:", error);
     }
@@ -34,14 +56,13 @@ const UserDetails = ({ user }) => {
       const userName = user.data.name;
       const response = await resetUserDetails(userName);
       alert(response.data.messaage);
-      window.location.reload();
     } catch (error) {
       console.error("Error resetting user details:", error);
     }
   };
 
   return (
-    <Card className="user-details-card">
+    <Card className="user-details-card user-details" style={userDetailsStyle}>
       <CardContent className="user-details-content">
         <Grid container justifyContent="space-between" alignItems="center">
           <Grid>
@@ -78,37 +99,62 @@ const UserDetails = ({ user }) => {
           </Grid>
         </Grid>
 
-        <Typography variant="body1" className="detail-item">
-          <strong>Name:</strong> {user.data.name}
-        </Typography>
-        <Typography variant="body1" className="detail-item">
-          <strong>Capital:</strong> {user.data.capital.toFixed(2)}
-        </Typography>
-        <Typography variant="body1" className="detail-item">
-          <strong>Available Balance:</strong> {user.data.availableBalance.toFixed(2)}
-        </Typography>
-        <Typography variant="body1" className="detail-item">
-          <strong>Net Profit/Loss:</strong> {user.data.netProfitOrLoss.toFixed(2)}
-        </Typography>
-        <Typography variant="body1" className="detail-item">
-          <strong>Total Trades:</strong> {user.data.totalTrades} (
-          <span style={{ color: "green" }}>+{user.data.totalPositiveTrades}</span>,
-          <span style={{ color: "red" }}>-{user.data.totalNegativeTrades}</span>)
-        </Typography>
-        <Typography variant="body1" className="detail-item">
-          <strong>Today Trades:</strong> {user.data.todayTradesCount} (
-          <span style={{ color: "green" }}>+{user.data.todayPositiveTrades}</span>,
-          <span style={{ color: "red" }}>-{user.data.todayNegativeTrades}</span>)
-        </Typography>
-        <Typography variant="body1" className="detail-item">
-          <strong>Unsettled Funds:</strong> {user.data.unsettledFunds}
-        </Typography>
-
+        <div>
+          <div style={detailStyle}>
+            <span style={boldTextStyle}>Name:</span> {user.data.name}
+          </div>
+          <div style={detailStyle}>
+            <span style={boldTextStyle}>Capital:</span>{" "}
+            {user.data.capital.toFixed(2)}
+          </div>
+          <div style={detailStyle}>
+            <span style={boldTextStyle}>Available Balance:</span>{" "}
+            {user.data.availableBalance.toFixed(2)}
+          </div>
+          <div style={detailStyle}>
+            <span style={boldTextStyle}>Net Profit/Loss:</span>{" "}
+            {user.data.netProfitOrLoss.toFixed(2)}
+          </div>
+          <div style={detailStyle}>
+            <span style={boldTextStyle}>Total Trades:</span>{" "}
+            {user.data.totalTrades} (
+            <span style={{ color: "green" }}>
+              +{user.data.totalPositiveTrades}
+            </span>
+            ,
+            <span style={{ color: "red" }}>
+              -{user.data.totalNegativeTrades}
+            </span>
+            )
+          </div>
+          <div style={detailStyle}>
+            <span style={boldTextStyle}>Today Trades:</span>{" "}
+            {user.data.todayTradesCount} (
+            <span style={{ color: "green" }}>
+              +{user.data.todayPositiveTrades}
+            </span>
+            ,
+            <span style={{ color: "red" }}>
+              -{user.data.todayNegativeTrades}
+            </span>
+            )
+          </div>
+          <div style={detailStyle}>
+            <span style={boldTextStyle}>Unsettled Funds:</span>{" "}
+            {user.data.unsettledFunds}
+          </div>
+        </div>
         <Grid container spacing={2}>
           <Grid item xs={6}>
-            <Typography variant="h6" className="detail-item">
+            <div
+              style={{
+                fontWeight: "bold",
+                color: theme.palette.text.primary,
+                fontSize: "16px",
+              }}
+            >
               CE Values (Last 5):
-            </Typography>
+            </div>
             <List dense>
               {ceValues.length > 0 ? (
                 ceValues.map((ce, index) => (
@@ -125,9 +171,15 @@ const UserDetails = ({ user }) => {
             </List>
           </Grid>
           <Grid item xs={6}>
-            <Typography variant="h6" className="detail-item">
+            <div
+              style={{
+                fontWeight: "bold",
+                color: theme.palette.text.primary,
+                fontSize: "16px",
+              }}
+            >
               PE Values (Last 5):
-            </Typography>
+            </div>
             <List dense>
               {peValues.length > 0 ? (
                 peValues.map((pe, index) => (
@@ -159,9 +211,15 @@ const UserDetails = ({ user }) => {
                   ))}
                 </List> */}
                 <Typography>Position: {userStatus.ceState.position}</Typography>
-                <Typography>Buy Price: {userStatus.ceState.buyPrice}</Typography>
-                <Typography>Stop Loss: {userStatus.ceState.stopLoss}</Typography>
-                <Typography>Profit Target: {userStatus.ceState.profitTarget}</Typography>
+                <Typography>
+                  Buy Price: {userStatus.ceState.buyPrice}
+                </Typography>
+                <Typography>
+                  Stop Loss: {userStatus.ceState.stopLoss}
+                </Typography>
+                <Typography>
+                  Profit Target: {userStatus.ceState.profitTarget}
+                </Typography>
               </Grid>
               <Grid item xs={6}>
                 <Typography variant="subtitle1">PE State</Typography>
@@ -173,9 +231,15 @@ const UserDetails = ({ user }) => {
                   ))}
                 </List> */}
                 <Typography>Position: {userStatus.peState.position}</Typography>
-                <Typography>Buy Price: {userStatus.peState.buyPrice}</Typography>
-                <Typography>Stop Loss: {userStatus.peState.stopLoss}</Typography>
-                <Typography>Profit Target: {userStatus.peState.profitTarget}</Typography>
+                <Typography>
+                  Buy Price: {userStatus.peState.buyPrice}
+                </Typography>
+                <Typography>
+                  Stop Loss: {userStatus.peState.stopLoss}
+                </Typography>
+                <Typography>
+                  Profit Target: {userStatus.peState.profitTarget}
+                </Typography>
               </Grid>
             </Grid>
           </Box>

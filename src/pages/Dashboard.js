@@ -258,19 +258,6 @@ const Dashboard = () => {
           {isBankNifty && (
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
-                {users["Bank Nifty 1"] && (
-                  <>
-                    <div className="user-details">
-                      <UserDetails user={users["Bank Nifty 1"]} />
-                    </div>
-                    <TradeList
-                      trades={trades["Bank Nifty 1"]}
-                      className="trade-table"
-                    />
-                  </>
-                )}
-              </Grid>
-              <Grid item xs={12} sm={6}>
                 {users["user606"] && (
                   <>
                     <div className="user-details">
@@ -291,6 +278,19 @@ const Dashboard = () => {
                     </div>
                     <TradeList
                       trades={trades["day1009"]}
+                      className="trade-table"
+                    />
+                  </>
+                )}
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                {users["Bank Nifty 1"] && (
+                  <>
+                    <div className="user-details">
+                      <UserDetails user={users["Bank Nifty 1"]} />
+                    </div>
+                    <TradeList
+                      trades={trades["Bank Nifty 1"]}
                       className="trade-table"
                     />
                   </>
