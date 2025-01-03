@@ -9,6 +9,12 @@ export const generateToken = async (data) => {
   await axios.post(`${API_URL}/token`, data);
 };
 
+export const getTokenDetails = async () => {
+  const response = await axios.get(`${API_URL}/getTokenDetails`);
+  console.log(response, "response");
+  return response;
+};
+
 export const submitInstrumentKeyCE = async (data) => {
   const response = await axios.post(`${API_URL}/instrumentce`, data);
   console.log(response);
