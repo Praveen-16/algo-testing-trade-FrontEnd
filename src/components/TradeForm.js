@@ -25,7 +25,6 @@ const TradeForm = ({
   onStartTrading,
   onStopTrading,
 }) => {
-  // const [tokenData, setTokenData] = useState("");
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState("success");
@@ -38,7 +37,7 @@ const TradeForm = ({
 
   useEffect(() => {
     const fetchInstruments = async () => {
-      setApiLoading(true); 
+      setApiLoading(true);
       try {
         const response = await getInstruments();
         const instrumentsData = response.data.map((instrument) => ({
@@ -51,7 +50,7 @@ const TradeForm = ({
       } catch (error) {
         console.error("Error fetching instruments", error);
       } finally {
-        setApiLoading(false); 
+        setApiLoading(false);
       }
     };
     setApiLoading(true);
@@ -62,24 +61,19 @@ const TradeForm = ({
     const checkTokenDate = async () => {
       try {
         const tokenDetails = await getTokenDetails();
-        console.log(tokenDetails.data.createdAt, "tokenDetails");
-
-        const apiDate = new Date(tokenDetails.data.createdAt); 
+        const apiDate = new Date(tokenDetails.data.createdAt);
         const formattedDate = apiDate.toLocaleDateString("en-US", {
           month: "short",
           day: "2-digit",
         });
         setApiFormattedDate(formattedDate);
-        const todayUTC = new Date(); 
+        const todayUTC = new Date();
         const isToday =
           apiDate.getUTCDate() === todayUTC.getUTCDate() &&
           apiDate.getUTCMonth() === todayUTC.getUTCMonth() &&
           apiDate.getUTCFullYear() === todayUTC.getUTCFullYear();
 
         setIsTokenToday(isToday);
-        console.log(`API Date (UTC): ${apiDate}`);
-        console.log(`Today's Date (UTC): ${todayUTC}`);
-        console.log(`Is token from today (UTC comparison): ${isToday}`);
       } catch (error) {
         console.error("Error fetching token details", error);
       }
@@ -150,12 +144,12 @@ const TradeForm = ({
       setSnackbarMessage("Failed setting Nifty 50 Data");
       setSnackbarSeverity("error");
     } finally {
-      setApiLoading(false); 
+      setApiLoading(false);
     }
   };
 
   const handleBankNiftyData = async () => {
-    setApiLoading(true); 
+    setApiLoading(true);
     try {
       const data = await getBnkNiftyValue();
       setSnackbarMessage(data.data.message);
@@ -164,7 +158,7 @@ const TradeForm = ({
       setSnackbarMessage("Failed setting Nifty 50 Data");
       setSnackbarSeverity("error");
     } finally {
-      setApiLoading(false); 
+      setApiLoading(false);
     }
   };
 
@@ -180,14 +174,28 @@ const TradeForm = ({
               href={LOGIN_URL}
               target="_blank"
               fullWidth
+              disabled={apiLoading || apiFormattedDate === ""}
               style={{
-                backgroundColor: isTokenToday ? "#1976d2" : "#FF9800", 
+                backgroundColor:
+                  apiLoading || apiFormattedDate === ""
+                    ? "#B0BEC5"
+                    : isTokenToday
+                    ? "#1976d2"
+                    : "#FF9800",
                 color: "white",
                 fontWeight: "bold",
                 padding: "10px",
               }}
             >
-              {isTokenToday ? (
+              {apiLoading || apiFormattedDate === "" ? (
+                <span>
+                  <strong>Loading...</strong>
+                  <br />
+                  <span style={{ fontSize: "0.9rem", fontWeight: "normal" }}>
+                    Please wait while we verify the token status.
+                  </span>
+                </span>
+              ) : isTokenToday ? (
                 <span>
                   <strong>Token Active</strong>
                   <br />
@@ -237,28 +245,26 @@ const TradeForm = ({
         </Grid>
         <Grid item xs={3}>
           <Button variant="contained" onClick={handleNifty50Data}>
-            Get Nifty50Data
+             Nifty50 Data
           </Button>
         </Grid>
         <Grid item xs={3}>
           <Button variant="contained" onClick={handleBankNiftyData}>
-            Get BankNiftyData
+            BankNifty Data
           </Button>
         </Grid>
       </Grid>
 
-
       {/* Saved Instruments Table */}
       <div className="saved-instruments">
         <h2>Saved Instruments</h2>
-                        {/* Loader */}
-      {(loading || apiLoading) && (
-        <div style={{ textAlign: "center", marginTop: "20px" }}>
-          <CircularProgress />
-        </div>
-      )}
-{
-        !loading && !apiLoading && (
+        {/* Loader */}
+        {(loading || apiLoading) && (
+          <div style={{ textAlign: "center", marginTop: "20px" }}>
+            <CircularProgress />
+          </div>
+        )}
+        {!loading && !apiLoading && (
           <Table>
             <TableHead>
               <TableRow>
@@ -279,8 +285,7 @@ const TradeForm = ({
               ))}
             </TableBody>
           </Table>
-        )
-}
+        )}
       </div>
 
       {/* Snackbar for notifications */}

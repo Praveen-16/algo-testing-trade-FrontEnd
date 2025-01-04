@@ -186,17 +186,27 @@ const Dashboard = () => {
             onStopTrading={handleStopTrading}
             className="trade-form"
           />
-          <Button variant="contained" onClick={handleToggle}>
-            {isNifty50 ? "Switch to BankNifty" : "Switch to Nifty50"}
-          </Button>
-          <Button
-            variant="contained"
-            sx={{ ml: 2 }}
-            style={{ marginLeft: "16px" }}
-            onClick={handelUpdateFunds}
-          >
-            Add Unsettled Funds
-          </Button>
+    <Grid container spacing={2} justifyContent="center" marginTop={2} marginBottom={2} alignItems="center">
+  <Grid item xs={6}>
+    <Button
+      variant="contained"
+      fullWidth
+      onClick={handleToggle}
+    >
+      {isNifty50 ? "Switch to BankNifty" : "Switch to Nifty50"}
+    </Button>
+  </Grid>
+  <Grid item xs={6}>
+    <Button
+      variant="contained"
+      fullWidth
+      onClick={handelUpdateFunds}
+    >
+      Add Unsettled Funds
+    </Button>
+  </Grid>
+</Grid>
+
 
           {isNifty50 && (
             <Grid container spacing={2}>

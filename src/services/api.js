@@ -11,7 +11,6 @@ export const generateToken = async (data) => {
 
 export const getTokenDetails = async () => {
   const response = await axios.get(`${API_URL}/getTokenDetails`);
-  console.log(response, "response");
   return response;
 };
 
