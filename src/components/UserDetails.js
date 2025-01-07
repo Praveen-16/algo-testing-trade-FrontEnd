@@ -27,7 +27,7 @@ const UserDetails = ({ user }) => {
     padding: '20px',
     borderRadius: '8px',
     boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
-    backgroundColor: theme.palette.mode === 'dark' ? '#333' : '#f7f7f7', // Dark gray in dark mode
+    backgroundColor: theme.palette.mode === 'dark' ? '#333' : '#f7f7f7',
   };
 
   const boldTextStyle = {
@@ -215,10 +215,10 @@ const UserDetails = ({ user }) => {
                   Buy Price: {userStatus.ceState.buyPrice}
                 </Typography>
                 <Typography>
-                  Stop Loss: {userStatus.ceState.stopLoss}
+                  Stop Loss: {userStatus.ceState.stopLoss.toFixed(2)}
                 </Typography>
                 <Typography>
-                  Profit Target: {userStatus.ceState.profitTarget}
+                  Profit Target: {userStatus.ceState.profitTarget.toFixed(2)}
                 </Typography>
               </Grid>
               <Grid item xs={6}>
@@ -235,10 +235,10 @@ const UserDetails = ({ user }) => {
                   Buy Price: {userStatus.peState.buyPrice}
                 </Typography>
                 <Typography>
-                  Stop Loss: {userStatus.peState.stopLoss}
+                  Stop Loss: {userStatus.peState.stopLoss.toFixed(2)}
                 </Typography>
                 <Typography>
-                  Profit Target: {userStatus.peState.profitTarget}
+                  Profit Target: {userStatus.peState.profitTarget.toFixed(2)}
                 </Typography>
               </Grid>
             </Grid>
