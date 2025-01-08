@@ -105,15 +105,15 @@ const UserDetails = ({ user }) => {
           </div>
           <div style={detailStyle}>
             <span style={boldTextStyle}>Capital:</span>{" "}
-            {user.data.capital.toFixed(2)}
+            {user.data.capital.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
           </div>
           <div style={detailStyle}>
             <span style={boldTextStyle}>Available Balance:</span>{" "}
-            {user.data.availableBalance.toFixed(2)}
+            {user.data.availableBalance.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
           </div>
           <div style={detailStyle}>
             <span style={boldTextStyle}>Net Profit/Loss:</span>{" "}
-            {user.data.netProfitOrLoss.toFixed(2)}
+            {user.data.netProfitOrLoss.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
           </div>
           <div style={detailStyle}>
             <span style={boldTextStyle}>Total Trades:</span>{" "}
