@@ -3,13 +3,15 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper
 import { useTheme } from '@mui/material/styles';
 
 const getProfitLossNumberColor = (number) => {
-  return parseFloat(number) < 0 ? 'red' : 'green';
+  return parseFloat(number.replace(/₹|,/g, '')) < 0 ? 'red' : 'green';
 };
 
 const highlightProfitLoss = (text) => {
-  return text.replace(/Profit\/Loss: (-?\d+(\.\d{1,2})?)/g, (match, p1) => {
+  return text.replace(/Profit\/Loss: ₹?(-?\d+(,\d{3})*(\.\d{1,2})?)/g, (match, p1) => {
     const color = getProfitLossNumberColor(p1);
-    return `Profit/Loss: <span style="color:${color}">${p1}</span>`;
+    return `Profit/Loss: <span style="color:${color}">₹${p1}</span>`;
+  }).replace(/(Sold|Bought) (CE|PE) at ₹?(-?\d+(,\d{3})*(\.\d{1,2})?)/g, (match, action, option, price) => {
+    return `${action} ${option} at <span style="color: grey;font-weight: 600;">₹${price}</span>`;
   });
 };
 
