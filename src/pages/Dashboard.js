@@ -45,7 +45,8 @@ const Dashboard = () => {
         "user9015",
         "user1005",
         "day1009",
-        'realUser5'
+        'realUser5',
+        "user52"
       ];
       try {
         const fetchedUsers = {};
@@ -281,6 +282,19 @@ const Dashboard = () => {
 
           {isBankNifty && (
             <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
+                {users["user52"] && (
+                  <>
+                    <div className="user-details">
+                      <UserDetails user={users["user52"]} />
+                    </div>
+                    <TradeList
+                      trades={trades["user52"]}
+                      className="trade-table"
+                    />
+                  </>
+                )}
+              </Grid>
               <Grid item xs={12} sm={6}>
                 {users["user606"] && (
                   <>
