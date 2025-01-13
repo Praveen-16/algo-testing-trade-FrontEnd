@@ -4,6 +4,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Dashboard from './pages/Dashboard';
 import { IconButton } from '@mui/material';
 import { Brightness4, Brightness7 } from '@mui/icons-material';
+import Footer from './components/Footer';
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -30,6 +31,7 @@ function App() {
           {darkMode ? <Brightness7 /> : <Brightness4 />}
         </IconButton>
         <Dashboard />
+        <Footer />
       </div>
     </ThemeProvider>
   );
