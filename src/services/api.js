@@ -2,7 +2,8 @@ import axios from "axios";
 
 
 // const API_URL = "http://localhost:5000/api/trading"; 
-const API_URL = "https://algo-testing-2.onrender.com/api/trading";
+// const API_URL = "https://algo-testing-2.onrender.com/api/trading";
+const API_URL = "https://algo-testing-trading-s.onrender.com/api/trading";
 
 
 export const generateToken = async (data) => {
