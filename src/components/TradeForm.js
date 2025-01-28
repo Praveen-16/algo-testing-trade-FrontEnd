@@ -275,7 +275,7 @@ const TradeForm = ({
               </TableRow>
             </TableHead>
             <TableBody>
-              {savedInstruments.map((instrument) => (
+              {savedInstruments.slice(0, 1).map((instrument) => (
                 <TableRow key={instrument.name}>
                   <TableCell>{instrument.name}</TableCell>
                   <TableCell>{instrument.callOptionSymbol}</TableCell>
