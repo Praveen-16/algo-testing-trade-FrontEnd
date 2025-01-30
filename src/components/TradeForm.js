@@ -28,7 +28,7 @@ const TradeForm = ({
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState("success");
-
+  const [niftyDataFetched, setNiftyDataFetched] = useState(false);
   const [savedInstruments, setSavedInstruments] = useState([]);
   const [loading, setLoading] = useState(false);
   const [apiLoading, setApiLoading] = useState(false);
@@ -55,7 +55,7 @@ const TradeForm = ({
     };
     setApiLoading(true);
     fetchInstruments();
-  }, []);
+  }, [niftyDataFetched]);
 
   useEffect(() => {
     const checkTokenDate = async () => {
@@ -140,6 +140,7 @@ const TradeForm = ({
       const data = await getNifty50Value();
       setSnackbarMessage(data.data.message);
       setSnackbarOpen(true);
+      setNiftyDataFetched(prevState => !prevState); 
     } catch (error) {
       setSnackbarMessage("Failed setting Nifty 50 Data");
       setSnackbarSeverity("error");
