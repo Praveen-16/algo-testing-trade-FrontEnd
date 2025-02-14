@@ -1,7 +1,7 @@
 
 import { useTheme } from '@mui/material/styles';
 import React, { useState } from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, Box, IconButton, Collapse } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, Box, IconButton, Collapse, Button,  } from '@mui/material';
 import { ExpandMore, ExpandLess } from '@mui/icons-material';
 
 const getProfitLossNumberColor = (number) => {
@@ -20,10 +20,14 @@ const highlightProfitLoss = (text) => {
 const TradeList = ({ trades }) => {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
-  const limitedTrades = trades.slice(-10);
+  const [visibleCount, setVisibleCount] = useState(10);
 
   const handleToggle = () => {
     setOpen(!open);
+  };
+
+  const handleShowMore = () => {
+    setVisibleCount((prev) => prev + 10);
   };
 
   return (
@@ -56,59 +60,46 @@ const TradeList = ({ trades }) => {
           }}
         >
           <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell
-                  sx={{
-                    backgroundColor: theme.palette.mode === 'dark' ? '#333' : theme.palette.background.default,
-                    padding: '16px',
-                    borderBottom: `2px solid ${theme.palette.divider}`,
-                  }}
-                >
-                  {/* <Typography
-                    variant="h6"
-                    sx={{ color: theme.palette.text.primary, fontWeight: 'bold' }}
-                  >
-                    Statement List
-                  </Typography> */}
-                </TableCell>
-              </TableRow>
-            </TableHead>
             <TableBody>
-              {limitedTrades.slice().reverse().map((trade, index) => (
-                <TableRow
-                  key={index}
-                  sx={{
-                    backgroundColor:
-                      index % 2 === 0
-                        ? theme.palette.mode === 'dark'
-                          ? '#242424'
-                          : theme.palette.action.hover
-                        : theme.palette.background.default,
-                  }}
-                >
-                  <TableCell
+              {trades
+                .slice(-visibleCount)
+                .reverse()
+                .map((trade, index) => (
+                  <TableRow
+                    key={index}
                     sx={{
-                      padding: '12px 16px',
+                      backgroundColor:
+                        index % 2 === 0
+                          ? theme.palette.mode === 'dark'
+                            ? '#242424'
+                            : theme.palette.action.hover
+                          : theme.palette.background.default,
                     }}
                   >
-                    <Typography
-                      variant="body1"
-                      sx={{
-                        whiteSpace: 'pre-wrap',
-                        color: theme.palette.text.primary,
-                      }}
-                      dangerouslySetInnerHTML={{ __html: highlightProfitLoss(trade) }}
-                    ></Typography>
-                  </TableCell>
-                </TableRow>
-              ))}
+                    <TableCell sx={{ padding: '12px 16px' }}>
+                      <Typography
+                        variant="body1"
+                        sx={{ whiteSpace: 'pre-wrap', color: theme.palette.text.primary }}
+                        dangerouslySetInnerHTML={{ __html: highlightProfitLoss(trade) }}
+                      ></Typography>
+                    </TableCell>
+                  </TableRow>
+                ))}
             </TableBody>
           </Table>
         </TableContainer>
+
+        {visibleCount < trades.length && (
+          <Box textAlign="center" mt={2}>
+            <Button variant="contained" onClick={handleShowMore}>
+              Show More
+            </Button>
+          </Box>
+        )}
       </Collapse>
     </Box>
   );
 };
+
 
 export default TradeList;
