@@ -1,7 +1,7 @@
 
 import { useTheme } from '@mui/material/styles';
 import React, { useState } from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, Box, IconButton, Collapse, Button,  } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableRow, Paper, Typography, Box, IconButton, Collapse, Button,  } from '@mui/material';
 import { ExpandMore, ExpandLess } from '@mui/icons-material';
 
 const getProfitLossNumberColor = (number) => {
