@@ -11,7 +11,7 @@ import {
   Box,
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { resetUserDetails, getUserStatus } from "../services/api";
+import { resetUserDetails, getUserStatus, toggleUserTrading } from "../services/api";
 
 const UserDetails = ({ user }) => {
   const theme = useTheme();
@@ -36,7 +36,7 @@ const UserDetails = ({ user }) => {
   };
 
   const [userStatus, setUserStatus] = useState(null);
-
+  const [tradingState, setTradingState] = useState(user.data.doTrade);
   const peValues = user.data.peValues.slice(-5);
   const ceValues = user.data.ceValues.slice(-5);
 
@@ -58,6 +58,21 @@ const UserDetails = ({ user }) => {
       alert(response.data.messaage);
     } catch (error) {
       console.error("Error resetting user details:", error);
+    }
+  };
+
+
+  const handleToggleTrading = async () => {
+    try {
+
+      window.location.reload();
+      const userName = user.data.name;
+      const newStatus = !tradingState;
+      console.log(userName, newStatus);
+      await toggleUserTrading(userName, newStatus);
+      setTradingState(newStatus);
+    } catch (error) {
+      console.error("Error toggling trading status:", error);
     }
   };
 
@@ -84,7 +99,11 @@ const UserDetails = ({ user }) => {
             <Button
               variant="contained"
               color="secondary"
-              onClick={handleResetClick}
+              onClick={() => {
+                if (window.confirm("Are you sure you want to reset user details?")) {
+                  handleResetClick();
+                }
+              }}
             >
               Reset
             </Button>
@@ -97,6 +116,19 @@ const UserDetails = ({ user }) => {
               Show Status
             </Button>
           </Grid>
+  {  user.data.name ==='realUser5' && (<Grid >
+            <Button
+              variant="contained"
+              style={{ backgroundColor: tradingState ? "red" : "green", color: "white" }}
+              onClick={() => {
+                if (window.confirm(`Are you sure you want to ${tradingState ? "turn off" : "turn on"} trading?`)) {
+                  handleToggleTrading();
+                }
+              }}
+            >
+              {tradingState ? "Turn Off" : "Turn On"}
+            </Button>
+          </Grid>) }
         </Grid>
 
         <div>
@@ -203,13 +235,6 @@ const UserDetails = ({ user }) => {
             <Grid container spacing={2}>
               <Grid item xs={6}>
                 <Typography variant="subtitle1">CE State</Typography>
-                {/* <List dense>
-                  {userStatus.ceState.previousPrices.slice(-5).map((price, index) => (
-                    <ListItem key={index}>
-                      <ListItemText primary={`Price: ${price}`} />
-                    </ListItem>
-                  ))}
-                </List> */}
                 <Typography>Position: {userStatus.ceState.position}</Typography>
                 <Typography>
                   Buy Price: {userStatus.ceState.buyPrice}
@@ -223,13 +248,6 @@ const UserDetails = ({ user }) => {
               </Grid>
               <Grid item xs={6}>
                 <Typography variant="subtitle1">PE State</Typography>
-                {/* <List dense>
-                  {userStatus.peState.previousPrices.slice(-5).map((price, index) => (
-                    <ListItem key={index}>
-                      <ListItemText primary={`Price: ${price}`} />
-                    </ListItem>
-                  ))}
-                </List> */}
                 <Typography>Position: {userStatus.peState.position}</Typography>
                 <Typography>
                   Buy Price: {userStatus.peState.buyPrice}

@@ -70,3 +70,10 @@ export const getUserStatus = async (username) => {
   const response = await axios.post(`${API_URL}/getuserstate`, {username});
   return response
 };
+
+export const toggleUserTrading = async (userName, status) => {
+  if (!userName) throw new Error("Username is required");
+
+  const response = await axios.post(`${API_URL}/toggleTrading`, { userName, status });
+  return response.data;
+};
