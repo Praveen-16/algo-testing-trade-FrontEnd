@@ -241,13 +241,13 @@ const Dashboard = () => {
                 )}
               </Grid>
               <Grid item xs={12} sm={6}>
-                {users["user02"] && (
+                {users["user606"] && (
                   <>
                     <div className="user-details">
-                      <UserDetails user={users["user02"]} />
+                      <UserDetails user={users["user606"]} />
                     </div>
                     <TradeList
-                      trades={trades["user02"]}
+                      trades={trades["user606"]}
                       className="trade-table"
                     />
                   </>
@@ -337,13 +337,13 @@ const Dashboard = () => {
                 )}
               </Grid>
               <Grid item xs={12} sm={6}>
-                {users["user606"] && (
+                {users["user02"] && (
                   <>
                     <div className="user-details">
-                      <UserDetails user={users["user606"]} />
+                      <UserDetails user={users["user02"]} />
                     </div>
                     <TradeList
-                      trades={trades["user606"]}
+                      trades={trades["user02"]}
                       className="trade-table"
                     />
                   </>
