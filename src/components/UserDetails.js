@@ -185,11 +185,11 @@ const UserDetails = ({ user }) => {
                 fontSize: "16px",
               }}
             >
-              CE Values (Last 5):
+             Last CE Value :
             </div>
             <List dense>
               {ceValues.length > 0 ? (
-                ceValues.map((ce, index) => (
+                ceValues.slice(-1).map((ce, index) => (
                   <ListItem key={index}>
                     <ListItemText
                       primary={`Value: ${ce.value.toFixed(2)}`}
@@ -210,11 +210,11 @@ const UserDetails = ({ user }) => {
                 fontSize: "16px",
               }}
             >
-              PE Values (Last 5):
+              Last PE Value :
             </div>
             <List dense>
               {peValues.length > 0 ? (
-                peValues.map((pe, index) => (
+                peValues.slice(-1).map((pe, index) => (
                   <ListItem key={index}>
                     <ListItemText
                       primary={`Value: ${pe.value.toFixed(2)}`}

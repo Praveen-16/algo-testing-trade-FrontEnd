@@ -47,7 +47,6 @@ export const getInstruments  = async ()=>{
 
 export const getNifty50Value  = async ()=>{
   const response = await axios.get(`${API_URL}/nifty50data`);
-  console.log('nifty 50: ', response)
   return response
 }
 

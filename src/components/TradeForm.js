@@ -16,7 +16,7 @@ import {
   getBnkNiftyValue,
   getTokenDetails,
 } from "../services/api";
-import { LOGIN_URL, LOGS_URL } from "../utils/links/URLs";
+import { DB_URL, LOGIN_URL, LOGS_URL } from "../utils/links/URLs";
 
 const TradeForm = ({
   onGenerateToken,
@@ -223,6 +223,15 @@ const TradeForm = ({
               style={{ backgroundColor: "#607d8b", color: "white" }}
             >
               Logs
+            </Button>
+            <Button
+              variant="contained"
+              target="_blank"
+              href={DB_URL}
+              fullWidth
+              style={{ backgroundColor: "#033530", color: "white" }}
+            >
+              DB
             </Button>
           </div>
         </Grid>
