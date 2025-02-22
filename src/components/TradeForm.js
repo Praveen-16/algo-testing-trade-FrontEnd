@@ -140,7 +140,7 @@ const TradeForm = ({
       const data = await getNifty50Value();
       setSnackbarMessage(data.data.message);
       setSnackbarOpen(true);
-      setNiftyDataFetched(prevState => !prevState); 
+      setNiftyDataFetched((prevState) => !prevState);
     } catch (error) {
       setSnackbarMessage("Failed setting Nifty 50 Data");
       setSnackbarSeverity("error");
@@ -214,26 +214,31 @@ const TradeForm = ({
                 </span>
               )}
             </Button>
-
-            <Button
-              variant="contained"
-              target="_blank"
-              href={LOGS_URL}
-              fullWidth
-              style={{ backgroundColor: "#607d8b", color: "white" }}
-            >
-              Logs
-            </Button>
-            <Button
-              variant="contained"
-              target="_blank"
-              href={DB_URL}
-              fullWidth
-              style={{ backgroundColor: "#033530", color: "white" }}
-            >
-              DB
-            </Button>
           </div>
+        </Grid>
+        <Grid item xs={6}>
+          <Button
+            variant="contained"
+            target="_blank"
+            href={LOGS_URL}
+            fullWidth
+            style={{ backgroundColor: "#607d8b", color: "white" }}
+          >
+            Logs
+          </Button>
+          <Button
+            variant="contained"
+            target="_blank"
+            href={DB_URL}
+            fullWidth
+            style={{
+              backgroundColor: "#033530",
+              color: "white",
+              marginTop: "5px",
+            }}
+          >
+            DB
+          </Button>
         </Grid>
       </Grid>
 
@@ -255,7 +260,7 @@ const TradeForm = ({
         </Grid>
         <Grid item xs={3}>
           <Button variant="contained" onClick={handleNifty50Data}>
-             Nifty50 Data
+            Nifty50 Data
           </Button>
         </Grid>
         <Grid item xs={3}>
