@@ -100,7 +100,9 @@ const UserDetails = ({ user }) => {
               variant="contained"
               color="secondary"
               onClick={() => {
-                if (window.confirm("Are you sure you want to reset user details?")) {
+                if (
+                  window.confirm("Are you sure you want to reset user details?")
+                ) {
                   handleResetClick();
                 }
               }}
@@ -116,19 +118,30 @@ const UserDetails = ({ user }) => {
               Show Status
             </Button>
           </Grid>
-  {  user.data.name ==='realUser5' && (<Grid >
-            <Button
-              variant="contained"
-              style={{ backgroundColor: tradingState ? "red" : "green", color: "white" }}
-              onClick={() => {
-                if (window.confirm(`Are you sure you want to ${tradingState ? "turn off" : "turn on"} trading?`)) {
-                  handleToggleTrading();
-                }
-              }}
-            >
-              {tradingState ? "Turn Off" : "Turn On"}
-            </Button>
-          </Grid>) }
+          {user.data.name === "realUser5" && (
+            <Grid>
+              <Button
+                variant="contained"
+                style={{
+                  backgroundColor: tradingState ? "red" : "green",
+                  color: "white",
+                }}
+                onClick={() => {
+                  if (
+                    window.confirm(
+                      `Are you sure you want to ${
+                        tradingState ? "turn off" : "turn on"
+                      } trading?`
+                    )
+                  ) {
+                    handleToggleTrading();
+                  }
+                }}
+              >
+                {tradingState ? "Turn Off" : "Turn On"}
+              </Button>
+            </Grid>
+          )}
         </Grid>
 
         <div>
@@ -137,15 +150,21 @@ const UserDetails = ({ user }) => {
           </div>
           <div style={detailStyle}>
             <span style={boldTextStyle}>Capital:</span>{" "}
-            {user.data.capital.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
+            {user.data.capital.toLocaleString("en-IN", {
+              minimumFractionDigits: 2,
+            })}
           </div>
           <div style={detailStyle}>
             <span style={boldTextStyle}>Available Balance:</span>{" "}
-            {user.data.availableBalance.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
+            {user.data.availableBalance.toLocaleString("en-IN", {
+              minimumFractionDigits: 2,
+            })}
           </div>
           <div style={detailStyle}>
             <span style={boldTextStyle}>Net Profit/Loss:</span>{" "}
-            {user.data.netProfitOrLoss.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
+            {user.data.netProfitOrLoss.toLocaleString("en-IN", {
+              minimumFractionDigits: 2,
+            })}
           </div>
           <div style={detailStyle}>
             <span style={boldTextStyle}>Total Trades:</span>{" "}
@@ -245,6 +264,11 @@ const UserDetails = ({ user }) => {
                 <Typography>
                   Profit Target: {userStatus.ceState.profitTarget.toFixed(2)}
                 </Typography>
+                { userStatus.ceState.minPrice !== undefined && (
+                    <Typography>
+                      Compared LP: {userStatus.ceState.minPrice.toFixed(2)}
+                    </Typography>
+                  )}
               </Grid>
               <Grid item xs={6}>
                 <Typography variant="subtitle1">PE State</Typography>
@@ -258,6 +282,11 @@ const UserDetails = ({ user }) => {
                 <Typography>
                   Profit Target: {userStatus.peState.profitTarget.toFixed(2)}
                 </Typography>
+                {userStatus.peState.minPrice !== undefined && (
+                    <Typography>
+                      Compared LP: {userStatus.peState.minPrice.toFixed(2)}
+                    </Typography>
+                  )}
               </Grid>
             </Grid>
           </Box>
