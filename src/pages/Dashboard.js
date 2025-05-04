@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useLocation } from 'react-router-dom';
 import {
   Snackbar,
   Grid,
@@ -18,6 +19,7 @@ import UserDetails from "../components/UserDetails";
 import TradeForm from "../components/TradeForm";
 import TradeList from "../components/TradeList";
 import { addUnsetteldFunds } from "../services/api";
+
 
 
 const Dashboard = () => {
@@ -153,16 +155,16 @@ const Dashboard = () => {
     setSnackbarMessage(message.messaage);
     setSnackbarOpen(true);
   };
-
+  
+  const location = useLocation();
   useEffect(() => {
     const query = new URLSearchParams(window.location.search);
     const code = query.get('code');
     if (code) {
       let codePayload = { code: code };
       const sendCodeToBackend = generateToken(codePayload);
-      console.log(sendCodeToBackend, "code from Backend");
     }
-  }, []);
+  }, [location.search]);
 
   return (
     <div className="container">
