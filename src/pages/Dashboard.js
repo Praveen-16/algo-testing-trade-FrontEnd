@@ -157,9 +157,9 @@ const Dashboard = () => {
   useEffect(() => {
     const query = new URLSearchParams(window.location.search);
     const code = query.get('code');
-   console.log(code, "code from URL");
     if (code) {
-      const sendCodeToBackend = generateToken(code);
+      let codePayload = { code: code };
+      const sendCodeToBackend = generateToken(codePayload);
       console.log(sendCodeToBackend, "code from Backend");
     }
   }, []);
