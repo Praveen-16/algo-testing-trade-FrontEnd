@@ -1,3 +1,3 @@
-export const LOGIN_URL = "https://api.upstox.com/v2/login/authorization/dialog?response_type=code&client_id=9a1c6050-d377-4659-bce7-66f4aec2b0a8&redirect_uri=https://algo-testing-trading-s.onrender.com/&state=";
+export const LOGIN_URL = "https://api.upstox.com/v2/login/authorization/dialog?response_type=code&client_id=9a1c6050-d377-4659-bce7-66f4aec2b0a8&redirect_uri=https://praveentrades.netlify.app/&state=";
 export const LOGS_URL = "https://dashboard.render.com/web/srv-cubtbil2ng1s73asf6lg/logs";
 export const DB_URL = "https://cloud.mongodb.com/v2/63fda8aa7ec40d41c4dfccec#/metrics/replicaSet/651d7bfd736fb71573c0ba9e/explorer/algo-trading/users/find";

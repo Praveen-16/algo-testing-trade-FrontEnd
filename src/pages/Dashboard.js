@@ -19,6 +19,7 @@ import TradeForm from "../components/TradeForm";
 import TradeList from "../components/TradeList";
 import { addUnsetteldFunds } from "../services/api";
 
+
 const Dashboard = () => {
   const [isNifty50, setIsNifty50] = useState(true);
   const [isBankNifty, setIsBankNifty] = useState(false);
@@ -152,6 +153,16 @@ const Dashboard = () => {
     setSnackbarMessage(message.messaage);
     setSnackbarOpen(true);
   };
+
+  useEffect(() => {
+    const query = new URLSearchParams(window.location.search);
+    const code = query.get('code');
+   console.log(code, "code from URL");
+    if (code) {
+      const sendCodeToBackend = generateToken(code);
+      console.log(sendCodeToBackend, "code from Backend");
+    }
+  }, []);
 
   return (
     <div className="container">
