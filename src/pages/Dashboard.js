@@ -162,7 +162,7 @@ const Dashboard = () => {
     const code = query.get('code');
     if (code) {
       let codePayload = { code: code };
-      const sendCodeToBackend = generateToken(codePayload);
+      // const sendCodeToBackend = generateToken(codePayload);
     }
   }, [location.search]);
 
