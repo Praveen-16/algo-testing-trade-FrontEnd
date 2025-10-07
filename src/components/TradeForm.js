@@ -295,7 +295,16 @@ const TradeForm = ({
                   <TableCell>{instrument.name}</TableCell>
                   <TableCell>{instrument.callOptionSymbol}</TableCell>
                   <TableCell>{instrument.putOptionSymbol}</TableCell>
-                  <TableCell>{instrument.updatedAt}</TableCell>
+                  <TableCell>
+                    {new Date(instrument.updatedAt).toLocaleString("en-IN", {
+                      timeZone: "Asia/Kolkata",
+                      month: "short",
+                      day: "2-digit",
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      hour12: false
+                    }).replace(',', '')}
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
