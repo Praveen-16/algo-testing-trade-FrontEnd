@@ -9,12 +9,14 @@ import {
   TableHead,
   TableRow,
   CircularProgress,
+  TextField,
 } from "@mui/material";
 import {
   getInstruments,
   getNifty50Value,
   getBnkNiftyValue,
   getTokenDetails,
+  storeTokenManohar,
 } from "../services/api";
 import { DB_URL, LOGIN_URL, LOGS_URL } from "../utils/links/URLs";
 
@@ -34,6 +36,8 @@ const TradeForm = ({
   const [apiLoading, setApiLoading] = useState(false);
   const [isTokenToday, setIsTokenToday] = useState(false);
   const [apiFormattedDate, setApiFormattedDate] = useState("");
+  const [manoharToken, setManoharToken] = useState("");
+  const [isStoring, setIsStoring] = useState(false);
 
   useEffect(() => {
     const fetchInstruments = async () => {
@@ -53,7 +57,6 @@ const TradeForm = ({
         setApiLoading(false);
       }
     };
-    setApiLoading(true);
     fetchInstruments();
   }, [niftyDataFetched]);
 
@@ -72,35 +75,39 @@ const TradeForm = ({
           apiDate.getUTCDate() === todayUTC.getUTCDate() &&
           apiDate.getUTCMonth() === todayUTC.getUTCMonth() &&
           apiDate.getUTCFullYear() === todayUTC.getUTCFullYear();
-
         setIsTokenToday(isToday);
       } catch (error) {
         console.error("Error fetching token details", error);
       }
     };
-
     checkTokenDate();
   }, []);
 
-  const handleSnackbarClose = () => {
-    setSnackbarOpen(false);
-  };
+  const handleSnackbarClose = () => setSnackbarOpen(false);
 
-  // const handleGenerateToken = async () => {
-  //   setLoading(true);
-  //   try {
-  //     await onGenerateToken(tokenData);
-  //     setSnackbarMessage("Token generated successfully!");
-  //     setSnackbarSeverity("success");
-  //     setSnackbarOpen(true);
-  //   } catch (error) {
-  //     setSnackbarMessage("Failed to generate token.");
-  //     setSnackbarSeverity("error");
-  //     setSnackbarOpen(true);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
+  const handleStoreManoharToken = async () => {
+    if (!manoharToken.trim()) {
+      setSnackbarMessage("Please enter a valid Manohar token");
+      setSnackbarSeverity("error");
+      setSnackbarOpen(true);
+      return;
+    }
+    setIsStoring(true);
+    try {
+      const res = await storeTokenManohar({ manoharToken });
+      setSnackbarMessage(res.data.message);
+      setSnackbarSeverity("success");
+      setSnackbarOpen(true);
+      setManoharToken("");
+    } catch (error) {
+      console.error(error);
+      setSnackbarMessage("Failed to store Manohar token");
+      setSnackbarSeverity("error");
+      setSnackbarOpen(true);
+    } finally {
+      setIsStoring(false);
+    }
+  };
 
   const handleStartTrading = async () => {
     setLoading(true);
@@ -140,10 +147,11 @@ const TradeForm = ({
       const data = await getNifty50Value();
       setSnackbarMessage(data.data.message);
       setSnackbarOpen(true);
-      setNiftyDataFetched((prevState) => !prevState);
+      setNiftyDataFetched((prev) => !prev);
     } catch (error) {
       setSnackbarMessage("Failed setting Nifty 50 Data");
       setSnackbarSeverity("error");
+      setSnackbarOpen(true);
     } finally {
       setApiLoading(false);
     }
@@ -156,8 +164,9 @@ const TradeForm = ({
       setSnackbarMessage(data.data.message);
       setSnackbarOpen(true);
     } catch (error) {
-      setSnackbarMessage("Failed setting Nifty 50 Data");
+      setSnackbarMessage("Failed setting Bank Nifty Data");
       setSnackbarSeverity("error");
+      setSnackbarOpen(true);
     } finally {
       setApiLoading(false);
     }
@@ -167,9 +176,7 @@ const TradeForm = ({
     <div className="trade-form-container">
       <Grid container spacing={2} className="trade-form" alignItems="center">
         <Grid item xs={6}>
-          <div
-            style={{ display: "flex", flexDirection: "column", gap: "20px" }}
-          >
+          <div style={{ display: "flex", flexDirection: "column", gap: "15px" }}>
             <Button
               variant="contained"
               href={LOGIN_URL}
@@ -214,8 +221,47 @@ const TradeForm = ({
                 </span>
               )}
             </Button>
+
+            {/* ======== New Manohar Token Input ======== */}
+            <Grid container spacing={1} alignItems="center">
+              <Grid item xs={8}>
+                <TextField
+                  variant="outlined"
+                  label="Enter Manohar Token"
+                  fullWidth
+                  value={manoharToken}
+                  onChange={(e) => setManoharToken(e.target.value)}
+                  InputLabelProps={{ style: { color: "#ccc" } }}
+                  InputProps={{
+                    style: {
+                      color: "#fff",
+                      backgroundColor: "#2c2c2c",
+                      borderRadius: "8px",
+                    },
+                  }}
+                />
+              </Grid>
+              <Grid item xs={4}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  fullWidth
+                  onClick={handleStoreManoharToken}
+                  disabled={isStoring}
+                  style={{
+                    padding: "10px 0",
+                    backgroundColor: isStoring ? "#888" : "#1976d2",
+                    color: "#fff",
+                    fontWeight: "bold",
+                  }}
+                >
+                  {isStoring ? <CircularProgress size={24} color="inherit" /> : "Save Token"}
+                </Button>
+              </Grid>
+            </Grid>
           </div>
         </Grid>
+
         <Grid item xs={6}>
           <Button
             variant="contained"
@@ -242,8 +288,8 @@ const TradeForm = ({
         </Grid>
       </Grid>
 
-      <Grid container spacing={2} className="trade-form">
-        {/* Start/Stop Trading Buttons */}
+      {/* Start/Stop Trading & Nifty Buttons */}
+      <Grid container spacing={2} className="trade-form" style={{ marginTop: "20px" }}>
         <Grid item xs={3}>
           <Button variant="contained" onClick={handleStartTrading}>
             Start Trading
@@ -271,9 +317,8 @@ const TradeForm = ({
       </Grid>
 
       {/* Saved Instruments Table */}
-      <div className="saved-instruments">
+      <div className="saved-instruments" style={{ marginTop: "30px" }}>
         <h2>Saved Instruments</h2>
-        {/* Loader */}
         {(loading || apiLoading) && (
           <div style={{ textAlign: "center", marginTop: "20px" }}>
             <CircularProgress />
@@ -302,8 +347,8 @@ const TradeForm = ({
                       day: "2-digit",
                       hour: "2-digit",
                       minute: "2-digit",
-                      hour12: false
-                    }).replace(',', '')}
+                      hour12: false,
+                    }).replace(",", "")}
                   </TableCell>
                 </TableRow>
               ))}
@@ -312,17 +357,16 @@ const TradeForm = ({
         )}
       </div>
 
-      {/* Snackbar for notifications */}
+      {/* Snackbar */}
       <Snackbar
         open={snackbarOpen}
-        autoHideDuration={6000}
+        autoHideDuration={4000}
         onClose={handleSnackbarClose}
         message={snackbarMessage}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
         ContentProps={{
           style: {
-            backgroundColor:
-              snackbarSeverity === "success" ? "#4caf50" : "#f44336",
+            backgroundColor: snackbarSeverity === "success" ? "#4caf50" : "#f44336",
             color: "white",
           },
         }}

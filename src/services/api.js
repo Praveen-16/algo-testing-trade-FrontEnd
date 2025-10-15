@@ -7,7 +7,13 @@ const API_URL = "https://algo-testing-trading-production.up.railway.app/api/trad
 
 
 export const generateToken = async (data) => {
-  await axios.post(`${API_URL}/token`, data);
+  const response = await axios.post(`${API_URL}/token`, data);
+  return response;
+};
+
+export const storeTokenManohar = async (data) => {
+  const response = await axios.post(`${API_URL}/token-manohar`, data);
+  return response;
 };
 
 export const getTokenDetails = async () => {
