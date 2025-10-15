@@ -38,6 +38,7 @@ const TradeForm = ({
   const [apiFormattedDate, setApiFormattedDate] = useState("");
   const [manoharToken, setManoharToken] = useState("");
   const [isStoring, setIsStoring] = useState(false);
+  const darkMode = localStorage.getItem("theme") === "dark";
 
   useEffect(() => {
     const fetchInstruments = async () => {
@@ -221,47 +222,10 @@ const TradeForm = ({
                 </span>
               )}
             </Button>
-
-            {/* ======== New Manohar Token Input ======== */}
-            <Grid container spacing={1} alignItems="center">
-              <Grid item xs={8}>
-                <TextField
-                  variant="outlined"
-                  label="Enter Manohar Token"
-                  fullWidth
-                  value={manoharToken}
-                  onChange={(e) => setManoharToken(e.target.value)}
-                  InputLabelProps={{ style: { color: "#ccc" } }}
-                  InputProps={{
-                    style: {
-                      color: "#fff",
-                      backgroundColor: "#2c2c2c",
-                      borderRadius: "8px",
-                    },
-                  }}
-                />
-              </Grid>
-              <Grid item xs={4}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  fullWidth
-                  onClick={handleStoreManoharToken}
-                  disabled={isStoring}
-                  style={{
-                    padding: "10px 0",
-                    backgroundColor: isStoring ? "#888" : "#1976d2",
-                    color: "#fff",
-                    fontWeight: "bold",
-                  }}
-                >
-                  {isStoring ? <CircularProgress size={24} color="inherit" /> : "Save Token"}
-                </Button>
-              </Grid>
-            </Grid>
           </div>
         </Grid>
-
+   {/* ======== New Manohar Token Input ======== */}
+        
         <Grid item xs={6}>
           <Button
             variant="contained"
@@ -315,7 +279,46 @@ const TradeForm = ({
           </Button>
         </Grid>
       </Grid>
-
+    <Grid container spacing={1} alignItems="center">
+              <Grid item xs={8}>
+               <TextField
+  variant="outlined"
+  label="Enter Manohar Token"
+  fullWidth
+  value={manoharToken}
+  onChange={(e) => setManoharToken(e.target.value)}
+  InputLabelProps={{
+    style: {
+      color: darkMode ? "#ccc" : "#555",
+    },
+  }}
+  InputProps={{
+    style: {
+      color: darkMode ? "#fff" : "#000",
+      backgroundColor: darkMode ? "#2c2c2c" : "#f5f5f5",
+      borderRadius: "8px",
+    },
+  }}
+/>
+              </Grid>
+              <Grid item xs={4}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  fullWidth
+                  onClick={handleStoreManoharToken}
+                  disabled={isStoring}
+                  style={{
+                    padding: "10px 0",
+                    backgroundColor: isStoring ? "#888" : "#1976d2",
+                    color: "#fff",
+                    fontWeight: "bold",
+                  }}
+                >
+                  {isStoring ? <CircularProgress size={24} color="inherit" /> : "Save Token"}
+                </Button>
+              </Grid>
+            </Grid>
       {/* Saved Instruments Table */}
       <div className="saved-instruments" style={{ marginTop: "30px" }}>
         <h2>Saved Instruments</h2>
