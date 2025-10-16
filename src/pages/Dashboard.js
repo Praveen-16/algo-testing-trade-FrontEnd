@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 import {
   Snackbar,
   Grid,
@@ -162,7 +162,9 @@ const Dashboard = () => {
     const code = query.get('code');
     if (code) {
       let codePayload = { code: code };
-      // const sendCodeToBackend = generateToken(codePayload);
+      generateToken(codePayload);
+      Navigate(window.location.pathname, { replace: true });
+
     }
   }, [location.search]);
 
