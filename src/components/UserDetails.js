@@ -212,7 +212,7 @@ const UserDetails = ({ user }) => {
                   <ListItem key={index}>
                     <ListItemText
                       primary={`Value: ${ce.value.toFixed(2)}`}
-                      secondary={`Time: ${new Date(ce.time).toLocaleString()}`}
+                      secondary={`Time: ${new Date(ce.time).toLocaleDateString('en-IN')} ${new Date(ce.time).toLocaleTimeString('en-IN')}`}
                     />
                   </ListItem>
                 ))
@@ -237,7 +237,7 @@ const UserDetails = ({ user }) => {
                   <ListItem key={index}>
                     <ListItemText
                       primary={`Value: ${pe.value.toFixed(2)}`}
-                      secondary={`Time: ${new Date(pe.time).toLocaleString()}`}
+                      secondary={`Time: ${new Date(pe.time).toLocaleDateString('en-IN')} ${new Date(pe.time).toLocaleTimeString('en-IN')}`}
                     />
                   </ListItem>
                 ))

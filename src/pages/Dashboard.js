@@ -41,15 +41,15 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       const userNames = [
-        "user5",
+        "user52",
+        "day1009",
         "user10",
         "user606",
         "Bank Nifty 1",
         "user9015",
         "user1005",
-        "day1009",
         'realUser5',
-        "user52",
+        "user5",
         "user02",
         "userNSL"
       ];
@@ -205,38 +205,49 @@ const Dashboard = () => {
             onStopTrading={handleStopTrading}
             className="trade-form"
           />
-    <Grid container spacing={2} justifyContent="center" marginTop={2} marginBottom={2} alignItems="center">
-  <Grid item xs={6}>
-    <Button
-      variant="contained"
-      fullWidth
-      onClick={handleToggle}
-    >
-      {isNifty50 ? "Switch to BankNifty" : "Switch to Nifty50"}
-    </Button>
-  </Grid>
-  <Grid item xs={6}>
-    <Button
-      variant="contained"
-      fullWidth
-      onClick={handelUpdateFunds}
-    >
-      Add Unsettled Funds
-    </Button>
-  </Grid>
-</Grid>
-
+          <Grid
+            container
+            spacing={2}
+            justifyContent="center"
+            marginTop={2}
+            marginBottom={2}
+            alignItems="center"
+          >
+            <Grid item xs={6}>
+              <Button variant="contained" fullWidth onClick={handleToggle}>
+                {isNifty50 ? "Switch to BankNifty" : "Switch to Nifty50"}
+              </Button>
+            </Grid>
+            <Grid item xs={6}>
+              <Button variant="contained" fullWidth onClick={handelUpdateFunds}>
+                Add Unsettled Funds
+              </Button>
+            </Grid>
+          </Grid>
 
           {isNifty50 && (
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
-                {users["user5"] && (
+                {users["user52"] && (
                   <>
                     <div className="user-details">
-                      <UserDetails user={users["user5"]} />
+                      <UserDetails user={users["user52"]} />
                     </div>
                     <TradeList
-                      trades={trades["user5"]}
+                      trades={trades["user52"]}
+                      className="trade-table"
+                    />
+                  </>
+                )}
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                {users["day1009"] && (
+                  <>
+                    <div className="user-details">
+                      <UserDetails user={users["day1009"]} />
+                    </div>
+                    <TradeList
+                      trades={trades["day1009"]}
                       className="trade-table"
                     />
                   </>
@@ -325,14 +336,14 @@ const Dashboard = () => {
 
           {isBankNifty && (
             <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-                {users["user52"] && (
+              <Grid item xs={12} sm={6}>
+                {users["user5"] && (
                   <>
                     <div className="user-details">
-                      <UserDetails user={users["user52"]} />
+                      <UserDetails user={users["user5"]} />
                     </div>
                     <TradeList
-                      trades={trades["user52"]}
+                      trades={trades["user5"]}
                       className="trade-table"
                     />
                   </>
@@ -359,19 +370,6 @@ const Dashboard = () => {
                     </div>
                     <TradeList
                       trades={trades["user02"]}
-                      className="trade-table"
-                    />
-                  </>
-                )}
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                {users["day1009"] && (
-                  <>
-                    <div className="user-details">
-                      <UserDetails user={users["day1009"]} />
-                    </div>
-                    <TradeList
-                      trades={trades["day1009"]}
                       className="trade-table"
                     />
                   </>

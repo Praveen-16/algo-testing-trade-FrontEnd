@@ -338,23 +338,17 @@ const TradeForm = ({
               </TableRow>
             </TableHead>
             <TableBody>
-              {savedInstruments.slice(0, 1).map((instrument) => (
-                <TableRow key={instrument.name}>
-                  <TableCell>{instrument.name}</TableCell>
-                  <TableCell>{instrument.callOptionSymbol}</TableCell>
-                  <TableCell>{instrument.putOptionSymbol}</TableCell>
-                  <TableCell>
-                    {new Date(instrument.updatedAt).toLocaleString("en-IN", {
-                      timeZone: "Asia/Kolkata",
-                      month: "short",
-                      day: "2-digit",
-                      hour: "2-digit",
-                      minute: "2-digit",
-                      hour12: false,
-                    }).replace(",", "")}
-                  </TableCell>
-                </TableRow>
-              ))}
+          {savedInstruments
+          .filter((instrument) => instrument.name === "Nifty 50")
+          .map((instrument) => (
+            <TableRow key={instrument.name}>
+              <TableCell>{instrument.name}</TableCell>
+              <TableCell>{instrument.callOptionSymbol}</TableCell>
+              <TableCell>{instrument.putOptionSymbol}</TableCell>
+              <TableCell>{instrument.updatedAt}</TableCell>
+            </TableRow>
+          ))}
+
             </TableBody>
           </Table>
         )}
