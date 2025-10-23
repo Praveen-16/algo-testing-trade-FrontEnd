@@ -266,7 +266,7 @@ const UserDetails = ({ user }) => {
                 </Typography>
                 { userStatus.ceState.minPrice !== undefined && (
                     <Typography>
-                      Compared LP: {userStatus.ceState.minPrice.toFixed(2)}
+                     Compared LP: {(userStatus?.ceState?.minPrice ?? 0).toFixed(2)}
                     </Typography>
                   )}
               </Grid>
@@ -284,7 +284,7 @@ const UserDetails = ({ user }) => {
                 </Typography>
                 {userStatus.peState.minPrice !== undefined && (
                     <Typography>
-                      Compared LP: {userStatus.peState.minPrice.toFixed(2)}
+                     Compared LP: {(userStatus?.peState?.minPrice ?? 0).toFixed(2)}
                     </Typography>
                   )}
               </Grid>
