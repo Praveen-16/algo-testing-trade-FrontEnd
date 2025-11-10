@@ -35,6 +35,7 @@ const TradeForm = ({
   const [loading, setLoading] = useState(false);
   const [apiLoading, setApiLoading] = useState(false);
   const [isTokenToday, setIsTokenToday] = useState(false);
+  const [isTokenTodayManohar, setIsTokenTodayManohar] = useState(false);
   const [apiFormattedDate, setApiFormattedDate] = useState("");
   const [manoharToken, setManoharToken] = useState("");
   const [isStoring, setIsStoring] = useState(false);
@@ -66,6 +67,7 @@ const TradeForm = ({
       try {
         const tokenDetails = await getTokenDetails();
         const apiDate = new Date(tokenDetails.data.createdAt);
+        const apiDateManohar = new Date(tokenDetails.data.createdAtManohar);
         const formattedDate = apiDate.toLocaleDateString("en-US", {
           month: "short",
           day: "2-digit",
@@ -77,6 +79,13 @@ const TradeForm = ({
           apiDate.getUTCMonth() === todayUTC.getUTCMonth() &&
           apiDate.getUTCFullYear() === todayUTC.getUTCFullYear();
         setIsTokenToday(isToday);
+
+         const isTodayManohar =
+        apiDateManohar.getUTCDate() === todayUTC.getUTCDate() &&
+        apiDateManohar.getUTCMonth() === todayUTC.getUTCMonth() &&
+        apiDateManohar.getUTCFullYear() === todayUTC.getUTCFullYear();
+              setIsTokenTodayManohar(isTodayManohar);
+
       } catch (error) {
         console.error("Error fetching token details", error);
       }
@@ -302,21 +311,31 @@ const TradeForm = ({
 />
               </Grid>
               <Grid item xs={4}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  fullWidth
-                  onClick={handleStoreManoharToken}
-                  disabled={isStoring}
-                  style={{
-                    padding: "10px 0",
-                    backgroundColor: isStoring ? "#888" : "#1976d2",
-                    color: "#fff",
-                    fontWeight: "bold",
-                  }}
-                >
-                  {isStoring ? <CircularProgress size={24} color="inherit" /> : "Save Token"}
-                </Button>
+          <Button
+  variant="contained"
+  color="primary"
+  fullWidth
+  onClick={handleStoreManoharToken}
+  disabled={isStoring}
+  style={{
+    padding: "10px 0",
+    backgroundColor: isStoring
+      ? "#888"
+      : isTokenTodayManohar
+      ? "#1976d2"
+      : "#FF9800",
+    color: "#fff",
+    fontWeight: "bold",
+  }}
+>
+  {isStoring ? (
+    <CircularProgress size={24} color="inherit" />
+  ) : (
+    "Save Token"
+  )}
+</Button>
+
+
               </Grid>
             </Grid>
       {/* Saved Instruments Table */}
