@@ -19,6 +19,7 @@ import {
   storeTokenManohar,
 } from "../services/api";
 import { DB_URL, LOGIN_URL, LOGS_URL } from "../utils/links/URLs";
+import NiftyAnalysis from "./nifty50";
 
 const TradeForm = ({
   onGenerateToken,
@@ -40,12 +41,35 @@ const TradeForm = ({
   const [manoharToken, setManoharToken] = useState("");
   const [isStoring, setIsStoring] = useState(false);
   const darkMode = localStorage.getItem("theme") === "dark";
+  const [niftySpotPrice, setNiftySpotPrice] = useState("0.00");
+  const [niftyChange, setNiftyChange] = useState(0.0);
+  const [niftyR1, setNiftyR1] = useState("N/A");
+  const [niftyR2, setNiftyR2] = useState("N/A"); // Using N/A as your data only has one resistance
+  const [niftyS1, setNiftyS1] = useState("N/A");
+  const [niftyS2, setNiftyS2] = useState("N/A");
 
   useEffect(() => {
     const fetchInstruments = async () => {
       setApiLoading(true);
       try {
         const response = await getInstruments();
+        const nifty50Data = response.data.find(
+          (instrument) => instrument.name === "Nifty 50"
+        );
+
+        if (nifty50Data) {
+          const currentPrice = parseFloat(nifty50Data.currentPrice);
+          const closingPrice = parseFloat(nifty50Data.closingPrice);
+          const resistance = nifty50Data.resistance;
+          const support = nifty50Data.support;
+
+          setNiftySpotPrice(currentPrice.toFixed(2));
+          setNiftyChange((currentPrice - closingPrice).toFixed(2));
+
+          setNiftyR1(resistance ? resistance.toFixed(2) : "N/A");
+          setNiftyS1(support ? support.toFixed(2) : "N/A");
+        }
+        // 💥 END NEW LOGIC 💥
         const instrumentsData = response.data.map((instrument) => ({
           name: instrument.name,
           callOptionSymbol: instrument.callOptionSymbol,
@@ -80,12 +104,11 @@ const TradeForm = ({
           apiDate.getUTCFullYear() === todayUTC.getUTCFullYear();
         setIsTokenToday(isToday);
 
-         const isTodayManohar =
-        apiDateManohar.getUTCDate() === todayUTC.getUTCDate() &&
-        apiDateManohar.getUTCMonth() === todayUTC.getUTCMonth() &&
-        apiDateManohar.getUTCFullYear() === todayUTC.getUTCFullYear();
-              setIsTokenTodayManohar(isTodayManohar);
-
+        const isTodayManohar =
+          apiDateManohar.getUTCDate() === todayUTC.getUTCDate() &&
+          apiDateManohar.getUTCMonth() === todayUTC.getUTCMonth() &&
+          apiDateManohar.getUTCFullYear() === todayUTC.getUTCFullYear();
+        setIsTokenTodayManohar(isTodayManohar);
       } catch (error) {
         console.error("Error fetching token details", error);
       }
@@ -155,6 +178,7 @@ const TradeForm = ({
     setApiLoading(true);
     try {
       const data = await getNifty50Value();
+      console.log("Nifty 50 Data:", data);
       setSnackbarMessage(data.data.message);
       setSnackbarOpen(true);
       setNiftyDataFetched((prev) => !prev);
@@ -186,7 +210,9 @@ const TradeForm = ({
     <div className="trade-form-container">
       <Grid container spacing={2} className="trade-form" alignItems="center">
         <Grid item xs={6}>
-          <div style={{ display: "flex", flexDirection: "column", gap: "15px" }}>
+          <div
+            style={{ display: "flex", flexDirection: "column", gap: "15px" }}
+          >
             <Button
               variant="contained"
               href={LOGIN_URL}
@@ -233,8 +259,8 @@ const TradeForm = ({
             </Button>
           </div>
         </Grid>
-   {/* ======== New Manohar Token Input ======== */}
-        
+        {/* ======== New Manohar Token Input ======== */}
+
         <Grid item xs={6}>
           <Button
             variant="contained"
@@ -262,7 +288,12 @@ const TradeForm = ({
       </Grid>
 
       {/* Start/Stop Trading & Nifty Buttons */}
-      <Grid container spacing={2} className="trade-form" style={{ marginTop: "20px" }}>
+      <Grid
+        container
+        spacing={2}
+        className="trade-form"
+        style={{ marginTop: "20px" }}
+      >
         <Grid item xs={3}>
           <Button variant="contained" onClick={handleStartTrading}>
             Start Trading
@@ -288,56 +319,54 @@ const TradeForm = ({
           </Button>
         </Grid>
       </Grid>
-    <Grid container spacing={1} alignItems="center">
-              <Grid item xs={8}>
-               <TextField
-  variant="outlined"
-  label="Enter Manohar Token"
-  fullWidth
-  value={manoharToken}
-  onChange={(e) => setManoharToken(e.target.value)}
-  InputLabelProps={{
-    style: {
-      color: darkMode ? "#ccc" : "#555",
-    },
-  }}
-  InputProps={{
-    style: {
-      color: darkMode ? "#fff" : "#000",
-      backgroundColor: darkMode ? "#2c2c2c" : "#f5f5f5",
-      borderRadius: "8px",
-    },
-  }}
-/>
-              </Grid>
-              <Grid item xs={4}>
+      <Grid container spacing={1} alignItems="center">
+        <Grid item xs={8}>
+          <TextField
+            variant="outlined"
+            label="Enter Manohar Token"
+            fullWidth
+            value={manoharToken}
+            onChange={(e) => setManoharToken(e.target.value)}
+            InputLabelProps={{
+              style: {
+                color: darkMode ? "#ccc" : "#555",
+              },
+            }}
+            InputProps={{
+              style: {
+                color: darkMode ? "#fff" : "#000",
+                backgroundColor: darkMode ? "#2c2c2c" : "#f5f5f5",
+                borderRadius: "8px",
+              },
+            }}
+          />
+        </Grid>
+        <Grid item xs={4}>
           <Button
-  variant="contained"
-  color="primary"
-  fullWidth
-  onClick={handleStoreManoharToken}
-  disabled={isStoring}
-  style={{
-    padding: "10px 0",
-    backgroundColor: isStoring
-      ? "#888"
-      : isTokenTodayManohar
-      ? "#1976d2"
-      : "#FF9800",
-    color: "#fff",
-    fontWeight: "bold",
-  }}
->
-  {isStoring ? (
-    <CircularProgress size={24} color="inherit" />
-  ) : (
-    "Save Token"
-  )}
-</Button>
-
-
-              </Grid>
-            </Grid>
+            variant="contained"
+            color="primary"
+            fullWidth
+            onClick={handleStoreManoharToken}
+            disabled={isStoring}
+            style={{
+              padding: "10px 0",
+              backgroundColor: isStoring
+                ? "#888"
+                : isTokenTodayManohar
+                ? "#1976d2"
+                : "#FF9800",
+              color: "#fff",
+              fontWeight: "bold",
+            }}
+          >
+            {isStoring ? (
+              <CircularProgress size={24} color="inherit" />
+            ) : (
+              "Save Token"
+            )}
+          </Button>
+        </Grid>
+      </Grid>
       {/* Saved Instruments Table */}
       <div className="saved-instruments" style={{ marginTop: "30px" }}>
         <h2>Saved Instruments</h2>
@@ -357,22 +386,29 @@ const TradeForm = ({
               </TableRow>
             </TableHead>
             <TableBody>
-          {savedInstruments
-          .filter((instrument) => instrument.name === "Nifty 50")
-          .map((instrument) => (
-            <TableRow key={instrument.name}>
-              <TableCell>{instrument.name}</TableCell>
-              <TableCell>{instrument.callOptionSymbol}</TableCell>
-              <TableCell>{instrument.putOptionSymbol}</TableCell>
-              <TableCell>{instrument.updatedAt}</TableCell>
-            </TableRow>
-          ))}
-
+              {savedInstruments
+                .filter((instrument) => instrument.name === "Nifty 50")
+                .map((instrument) => (
+                  <TableRow key={instrument.name}>
+                    <TableCell>{instrument.name}</TableCell>
+                    <TableCell>{instrument.callOptionSymbol}</TableCell>
+                    <TableCell>{instrument.putOptionSymbol}</TableCell>
+                    <TableCell>{instrument.updatedAt}</TableCell>
+                  </TableRow>
+                ))}
             </TableBody>
           </Table>
         )}
       </div>
-
+      <NiftyAnalysis
+        spotPrice={niftySpotPrice}
+        change={""}
+        r1={niftyR1}
+        r2=""
+        s1={niftyS1}
+        s2=""
+        darkMode={darkMode}
+      />
       {/* Snackbar */}
       <Snackbar
         open={snackbarOpen}
@@ -382,7 +418,8 @@ const TradeForm = ({
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
         ContentProps={{
           style: {
-            backgroundColor: snackbarSeverity === "success" ? "#4caf50" : "#f44336",
+            backgroundColor:
+              snackbarSeverity === "success" ? "#4caf50" : "#f44336",
             color: "white",
           },
         }}
