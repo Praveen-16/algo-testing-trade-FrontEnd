@@ -29,6 +29,21 @@ const NiftyAnalysis = ({ spotPrice, change, r1, r2, s1, s2, darkMode }) => {
         }}
       >
         <Grid container spacing={4}>
+                  {/* SUPPORT */}
+          <Grid item xs={4}>
+            <Typography variant="body2" color={labelColor} style={{ fontWeight: 'bold' }}>
+              SUPPORT
+            </Typography>
+            <div style={{ marginTop: "10px" }}>
+              {/* Support colors remain green, as they indicate support regardless of theme */}
+              <Typography variant="body1" style={{ color: "#4caf50", fontWeight: "bold" }}>
+                S1: {s1 || "N/A"}
+              </Typography>
+              <Typography variant="body1" style={{ color: "#4caf50", fontWeight: "bold" }}>
+                S2: {s2 || "N/A"}
+              </Typography>
+            </div>
+          </Grid>
           {/* SPOT PRICE */}
           <Grid item xs={4}>
             <Typography variant="body2" color={labelColor} style={{ fontWeight: 'bold' }}>
@@ -56,22 +71,6 @@ const NiftyAnalysis = ({ spotPrice, change, r1, r2, s1, s2, darkMode }) => {
               </Typography>
               <Typography variant="body1" style={{ color: "#f44336", fontWeight: "bold" }}>
                 R2: {r2 || "N/A"}
-              </Typography>
-            </div>
-          </Grid>
-
-          {/* SUPPORT */}
-          <Grid item xs={4}>
-            <Typography variant="body2" color={labelColor} style={{ fontWeight: 'bold' }}>
-              SUPPORT
-            </Typography>
-            <div style={{ marginTop: "10px" }}>
-              {/* Support colors remain green, as they indicate support regardless of theme */}
-              <Typography variant="body1" style={{ color: "#4caf50", fontWeight: "bold" }}>
-                S1: {s1 || "N/A"}
-              </Typography>
-              <Typography variant="body1" style={{ color: "#4caf50", fontWeight: "bold" }}>
-                S2: {s2 || "N/A"}
               </Typography>
             </div>
           </Grid>
