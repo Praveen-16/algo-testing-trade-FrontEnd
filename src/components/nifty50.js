@@ -96,7 +96,11 @@ const NiftyAnalysis = ({ spotPrice, change, r1, r2, s1, s2, darkMode }) => {
         }}
       >
         <Grid container spacing={4}>
+<<<<<<< HEAD
           {/* SUPPORT */}
+=======
+                  {/* SUPPORT */}
+>>>>>>> 5db016e3d16e61a2af848f7c3f25d8a2527da7be
           <Grid item xs={4}>
             <Typography variant="body2" color={labelColor} style={{ fontWeight: 'bold' }}>
               SUPPORT
@@ -111,8 +115,12 @@ const NiftyAnalysis = ({ spotPrice, change, r1, r2, s1, s2, darkMode }) => {
               </Typography>
             </div>
           </Grid>
+<<<<<<< HEAD
           
           {/* SPOT PRICE - UPDATED */}
+=======
+          {/* SPOT PRICE */}
+>>>>>>> 5db016e3d16e61a2af848f7c3f25d8a2527da7be
           <Grid item xs={4}>
             <Typography variant="body2" color={labelColor} style={{ fontWeight: 'bold' }}>
               SPOT PRICE
