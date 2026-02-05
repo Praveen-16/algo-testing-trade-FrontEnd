@@ -253,23 +253,19 @@ const UserDetails = ({ user }) => {
             <Typography variant="h6">User Status</Typography>
             <Grid container spacing={2}>
               <Grid item xs={6}>
-                <Typography variant="subtitle1">CE State</Typography>
-                <Typography>Position: {userStatus.ceState.position}</Typography>
-                <Typography>
-                  Buy Price: {userStatus.ceState.buyPrice}
-                </Typography>
-                <Typography>
-                  Stop Loss: {userStatus.ceState.stopLoss.toFixed(2)}
-                </Typography>
-                <Typography>
-                  Profit Target: {userStatus.ceState.profitTarget.toFixed(2)}
-                </Typography>
-                { userStatus.ceState.minPrice !== undefined && (
-                    <Typography>
-                     Compared LP: {(userStatus?.ceState?.minPrice ?? 0).toFixed(2)}
+              <Typography variant="subtitle1">CE State</Typography>
+              {userStatus?.ceState &&
+                Object.entries(userStatus.ceState)
+                  .filter(([key]) => key !== "previousPrices")
+                  .map(([key, value]) => (
+                    <Typography key={key}>
+                      {key}:{" "}
+                      {typeof value === "number"
+                        ? value.toFixed(2)
+                        : String(value)}
                     </Typography>
-                  )}
-              </Grid>
+                  ))}
+            </Grid>
               <Grid item xs={6}>
                 <Typography variant="subtitle1">PE State</Typography>
                 <Typography>Position: {userStatus.peState.position}</Typography>
