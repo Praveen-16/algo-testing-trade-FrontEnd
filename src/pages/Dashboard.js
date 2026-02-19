@@ -228,6 +228,45 @@ const Dashboard = () => {
 
           {isNifty50 && (
             <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
+                {users["userNSL"] && (
+                  <>
+                    <div className="user-details">
+                      <UserDetails user={users["userNSL"]} />
+                    </div>{" "}
+                    <TradeList
+                      trades={trades["userNSL"]}
+                      className="trade-table"
+                    />
+                  </>
+                )}
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                {users["dayRetest01"] && (
+                  <>
+                    <div className="user-details">
+                      <UserDetails user={users["dayRetest01"]} />
+                    </div>{" "}
+                    <TradeList
+                      trades={trades["dayRetest01"]}
+                      className="trade-table"
+                    />
+                  </>
+                )}
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                {users["user606"] && (
+                  <>
+                    <div className="user-details">
+                      <UserDetails user={users["user606"]} />
+                    </div>
+                    <TradeList
+                      trades={trades["user606"]}
+                      className="trade-table"
+                    />
+                  </>
+                )}
+              </Grid>
               <Grid item xs={12} sm={6}>
                 {users["user52"] && (
                   <>
@@ -241,6 +280,7 @@ const Dashboard = () => {
                   </>
                 )}
               </Grid>
+              
               <Grid item xs={12} sm={6}>
                 {users["day1009"] && (
                   <>
@@ -280,45 +320,9 @@ const Dashboard = () => {
                   </>
                 )}
               </Grid> */}
-              <Grid item xs={12} sm={6}>
-                {users["user606"] && (
-                  <>
-                    <div className="user-details">
-                      <UserDetails user={users["user606"]} />
-                    </div>
-                    <TradeList
-                      trades={trades["user606"]}
-                      className="trade-table"
-                    />
-                  </>
-                )}
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                {users["userNSL"] && (
-                  <>
-                    <div className="user-details">
-                      <UserDetails user={users["userNSL"]} />
-                    </div>{" "}
-                    <TradeList
-                      trades={trades["userNSL"]}
-                      className="trade-table"
-                    />
-                  </>
-                )}
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                {users["dayRetest01"] && (
-                  <>
-                    <div className="user-details">
-                      <UserDetails user={users["dayRetest01"]} />
-                    </div>{" "}
-                    <TradeList
-                      trades={trades["dayRetest01"]}
-                      className="trade-table"
-                    />
-                  </>
-                )}
-              </Grid>
+              
+              
+              
               <Grid item xs={12} sm={6}>
                 {users["user10"] && (
                   <>
