@@ -224,8 +224,8 @@ const TradeForm = ({
                   apiLoading || apiFormattedDate === ""
                     ? "#B0BEC5"
                     : isTokenToday
-                    ? "#1976d2"
-                    : "#FF9800",
+                      ? "#1976d2"
+                      : "#FF9800",
                 color: "white",
                 fontWeight: "bold",
                 padding: "10px",
@@ -353,8 +353,8 @@ const TradeForm = ({
               backgroundColor: isStoring
                 ? "#888"
                 : isTokenTodayManohar
-                ? "#1976d2"
-                : "#FF9800",
+                  ? "#1976d2"
+                  : "#FF9800",
               color: "#fff",
               fontWeight: "bold",
             }}
@@ -393,7 +393,18 @@ const TradeForm = ({
                     <TableCell>{instrument.name}</TableCell>
                     <TableCell>{instrument.callOptionSymbol}</TableCell>
                     <TableCell>{instrument.putOptionSymbol}</TableCell>
-                    <TableCell>{instrument.updatedAt}</TableCell>
+                    <TableCell>
+                      {new Date(instrument.updatedAt).toLocaleString("en-IN", {
+                        timeZone: "Asia/Kolkata",
+                        day: "2-digit",
+                        month: "short",
+                        year: "numeric",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        second: "2-digit",
+                        hour12: true,
+                      })}
+                    </TableCell>{" "}
                   </TableRow>
                 ))}
             </TableBody>
